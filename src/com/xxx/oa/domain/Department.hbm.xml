@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xxx.oa.domain">
+
+	<class name="Department" table="xxx_department" >
+		<id name="id" >
+			<generator class="native" />
+		</id>
+		<property name="name" />
+		<property name="description" />
+		
+		<!-- users     attribution   depart   : user is 1 to many   -->
+		<set name="users" lazy="false">
+			<key column="departmentId"></key>
+			<one-to-many class="User"/>
+		</set>
+		<!-- parent   attribution   depart   : parent is  many to 1-->
+		<many-to-one name="parent" class="Department" column="parentId"></many-to-one>
+		
+		<!-- children attribution   depart   : children   is  1 to many-->
+		<set name="children" cascade="delete" lazy="false" >
+			<key column="parentId"></key>
+			<one-to-many class="Department"/>
+		</set>
+	
+	
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="false"/>
+	<constant name="struts.action.extension" value="action"/>
+	<constant name="struts.ui.theme" value="simple"/>
+   
+   
+    <package name="default" namespace="/" extends="struts-default" >
+    	
+    	
+    	<interceptors>
+    		<!-- declare a  bean of interceptor -->
+    		<interceptor name="checkPrivilege" class="com.xxx.oa.interceptor.CheckPrivilegeInterceptor"></interceptor>
+    
+    		<interceptor-stack name="defaultStack">
+    			<interceptor-ref name="checkPrivilege"/>
+    			<interceptor-ref name="defaultStack"/>
+    		</interceptor-stack>
+    
+    	</interceptors>
+    	
+    	
+    	<!-- global- result   use to check user's privilege when users want to login system -->
+    	<global-results>
+    		 	<result name="loginUI">/WEB-INF/jsp/userAction/loginUI.jsp</result>
+    		 	<result name="noPrivilegeError">/noPrivilegeError.jsp</result>
+    	</global-results>
+    	
+    	
+    	
+       <action name="test" class="com.xxx.oa.test.TestAction" >
+       <result>/test.jsp</result>
+		
+       </action>
+       <!-- Role -->
+       <action name="roleAction_*" class="roleAction" method="{1}">
+       	<result name="list">/WEB-INF/jsp/roleAction/list.jsp</result>
+       	<result name="addUI">/WEB-INF/jsp/roleAction/addUI.jsp</result>
+       	<result name="editUI">/WEB-INF/jsp/roleAction/editUI.jsp</result>
+       	<result name="setPrivilegeUI">/WEB-INF/jsp/roleAction/setPrivilegeUI.jsp</result>
+       	<result name="toList" type="redirectAction">roleAction_list</result>
+       </action>
+       <!-- Department -->
+       
+        
+       <action name="departmentAction_*" class="departmentAction" method="{1}">
+       	<result name="list">/WEB-INF/jsp/departmentAction/list.jsp</result>
+       	<result name="addUI">/WEB-INF/jsp/departmentAction/addUI.jsp</result>
+       	<result name="editUI">/WEB-INF/jsp/departmentAction/editUI.jsp</result>
+       	<result name="toList" type="redirectAction">departmentAction_list?parentId=${parentId}</result>
+       </action>
+       
+       
+       <!-- User -->
+        <action name="userAction_*" class="userAction" method="{1}">
+       	<result name="list">/WEB-INF/jsp/userAction/list.jsp</result>
+       	<result name="saveUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
+       	<result name="toList" type="redirectAction">userAction_list?parentId=${parentId}</result>
+       
+      
+       	<result name="logout">/WEB-INF/jsp/userAction/logout.jsp</result>
+       	<result name="toIndex" type="redirect">/index.jsp</result>
+
+       </action>
+       
+        <!-- Homepage -->
+        <action name="homeAction_*" class="homeAction" method="{1}">
+       	
+       	<result name="{1}">/WEB-INF/jsp/homeAction/{1}.jsp</result>
+       
+       </action>
+       
+        <!-- Forum   Management-->
+        <action name="forumManageAction_*" class="forumManageAction" method="{1}">
+       	
+       	<result name="list">/WEB-INF/jsp/forumManageAction/list.jsp</result>
+       	<result name="saveUI">/WEB-INF/jsp/forumManageAction/saveUI.jsp</result>
+       	<result name="toList" type="redirectAction">forumManageAction_list</result>
+       
+       </action>
+       
+        <!-- Forum  Forum other function-->
+        <action name="forumAction_*" class="forumAction" method="{1}">
+       	
+       	<result name="list">/WEB-INF/jsp/forumAction/list.jsp</result>
+       	<result name="show">/WEB-INF/jsp/forumAction/show.jsp</result>
+       
+       </action>
+       
+        <!-- Forum  Topic function-->
+        <action name="topicAction_*" class="topicAction" method="{1}">
+       	
+       	<result name="addUI">/WEB-INF/jsp/topicAction/addUI.jsp</result>
+       	<result name="show">/WEB-INF/jsp/topicAction/show.jsp</result>
+       	<result name="toShow" type="redirectAction">topicAction_show?id=${id}</result>
+       
+       </action>
+       
+        <!-- Forum  Reply function-->
+        <action name="replyAction_*" class="replyAction" method="{1}">
+       	
+       	<result name="addUI">/WEB-INF/jsp/replyAction/addUI.jsp</result>
+       	<result name="toTopicShow" type="redirectAction">topicAction_show?id=${topicId}</result>
+       
+       </action>
+       
+    </package>
+    
+     
+</struts>

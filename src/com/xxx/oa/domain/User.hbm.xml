@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xxx.oa.domain">
+
+	<class name="User" table="xxx_user" >
+		<id name="id" >
+			<generator class="native" />
+		</id>
+		<property name="loginName" />
+		<property name="password" />
+		<property name="name" />
+		<property name="gender" />
+		<property name="phoneNumber" />
+		<property name="email" />
+		<property name="description" />
+	
+	<!-- attribute   department  1 to many  user  -->
+	<many-to-one name="department" class="Department" column="departmentId" lazy="false" ></many-to-one>
+	
+	
+	<!-- attribute   role  many to many user -->
+	<set name="roles" table="xxx_user_role" lazy="false">
+			<key column="userId"></key>
+			<many-to-many class="Role" column="roleId"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>

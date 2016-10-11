@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xxx.oa.domain">
+
+	<class name="Forum" table="xxx_forum" >
+		<id name="id" >
+			<generator class="native" />
+		</id>
+		<property name="name" />
+		<property name="description" />
+		<property name="position" />
+		<property name="topicCount" />
+		<property name="articleCount" />
+		
+		<!-- attribute topics ,Forum with Topic : 1 to many-->
+	<set name="topics" table="" lazy="false">
+			<key column="forumId"></key>
+			<one-to-many class="Topic"></one-to-many>
+		</set>
+		
+		<!-- attribute lastTopic ,Forum with Topic : 1 to 1-->
+		<many-to-one name="lastTopic" class="Topic" column="lastTopicId" unique="true"></many-to-one>
+
+	</class>
+</hibernate-mapping>
